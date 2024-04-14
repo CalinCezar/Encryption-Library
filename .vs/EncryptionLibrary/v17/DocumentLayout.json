@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|c:\\users\\cezar\\source\\repos\\encryptionlibrary\\encryptionlibrary\\encryptioncode\\asymmetric\\rsaalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|solutionrelative:encryptionlibrary\\encryptioncode\\asymmetric\\rsaalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|c:\\users\\cezar\\source\\repos\\encryptionlibrary\\encryptionlibrary\\encryptioncode\\keygenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|solutionrelative:encryptionlibrary\\encryptioncode\\keygenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|c:\\users\\cezar\\source\\repos\\encryptionlibrary\\encryptionlibrary\\criptography.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94315E5E-54D7-4C5A-9522-4B242B855AA7}|EncryptionLibrary\\EncryptionLibrary.csproj|solutionrelative:encryptionlibrary\\criptography.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RSAalgorithm.cs",
+              "DocumentMoniker": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\EncryptionCode\\Asymmetric\\RSAalgorithm.cs",
+              "RelativeDocumentMoniker": "EncryptionLibrary\\EncryptionCode\\Asymmetric\\RSAalgorithm.cs",
+              "ToolTip": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\EncryptionCode\\Asymmetric\\RSAalgorithm.cs",
+              "RelativeToolTip": "EncryptionLibrary\\EncryptionCode\\Asymmetric\\RSAalgorithm.cs",
+              "ViewState": "AQIAAJUAAAAAAAAAAAA+wLIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T16:25:36.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "KeyGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\EncryptionCode\\KeyGenerator.cs",
+              "RelativeDocumentMoniker": "EncryptionLibrary\\EncryptionCode\\KeyGenerator.cs",
+              "ToolTip": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\EncryptionCode\\KeyGenerator.cs",
+              "RelativeToolTip": "EncryptionLibrary\\EncryptionCode\\KeyGenerator.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAAAFkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T11:20:46.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Criptography.cs",
+              "DocumentMoniker": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\Criptography.cs",
+              "RelativeDocumentMoniker": "EncryptionLibrary\\Criptography.cs",
+              "ToolTip": "C:\\Users\\Cezar\\source\\repos\\EncryptionLibrary\\EncryptionLibrary\\Criptography.cs",
+              "RelativeToolTip": "EncryptionLibrary\\Criptography.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T11:54:28.641Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

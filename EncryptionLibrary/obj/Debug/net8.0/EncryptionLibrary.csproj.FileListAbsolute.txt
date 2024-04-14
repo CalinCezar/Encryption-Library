@@ -1,0 +1,11 @@
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\bin\Debug\net8.0\EncryptionLibrary.deps.json
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\bin\Debug\net8.0\EncryptionLibrary.dll
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\bin\Debug\net8.0\EncryptionLibrary.pdb
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.AssemblyInfoInputs.cache
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.AssemblyInfo.cs
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.dll
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\refint\EncryptionLibrary.dll
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\EncryptionLibrary.pdb
+C:\Users\Cezar\source\repos\EncryptionLibrary\EncryptionLibrary\obj\Debug\net8.0\ref\EncryptionLibrary.dll
