@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using System.Text;
-using EncryptionLibrary.EncryptionCode;
+
 namespace EncryptionLibrary.EncryptionCode.Asymmetric
 {
     public class RSAalgorithm
@@ -41,16 +41,91 @@ namespace EncryptionLibrary.EncryptionCode.Asymmetric
 
         public byte[] Encrypt(byte[] data)
         {
-            BigInteger plaintext = new BigInteger(data);
-            BigInteger ciphertext = BigInteger.ModPow(plaintext, e, n);
-            return ciphertext.ToByteArray();
+            int maxBlockSize = (BitLength(n) + 7) / 8 - 11;
+            List<byte[]> encryptedBlocks = new List<byte[]>();
+
+            for (int i = 0; i < data.Length; i += maxBlockSize)
+            {
+                int blockSize = Math.Min(maxBlockSize, data.Length - i);
+                byte[] block = new byte[blockSize];
+                Array.Copy(data, i, block, 0, blockSize);
+                byte[] encryptedBlock = RSAEP(block);
+                encryptedBlocks.Add(encryptedBlock);
+            }
+
+            return encryptedBlocks.SelectMany(x => x).ToArray();
         }
 
         public byte[] Decrypt(byte[] data)
         {
-            BigInteger ciphertext = new BigInteger(data);
-            BigInteger plaintext = BigInteger.ModPow(ciphertext, d, n);
-            return plaintext.ToByteArray();
+            int maxBlockSize = (BitLength(n) + 7) / 8;
+            List<byte[]> decryptedBlocks = new List<byte[]>();
+
+            for (int i = 0; i < data.Length; i += maxBlockSize)
+            {
+                int blockSize = Math.Min(maxBlockSize, data.Length - i);
+                byte[] block = new byte[blockSize];
+                Array.Copy(data, i, block, 0, blockSize);
+                byte[] decryptedBlock = RSADP(block);
+                decryptedBlocks.Add(decryptedBlock);
+            }
+
+            return decryptedBlocks.SelectMany(x => x).ToArray();
+        }
+        public byte[] Sign(byte[] data)
+        {
+            int maxBlockSize = (BitLength(n) + 7) / 8 - 11;
+            List<byte[]> encryptedBlocks = new List<byte[]>();
+
+            for (int i = 0; i < data.Length; i += maxBlockSize)
+            {
+                int blockSize = Math.Min(maxBlockSize, data.Length - i);
+                byte[] block = new byte[blockSize];
+                Array.Copy(data, i, block, 0, blockSize);
+                byte[] encryptedBlock = RSADP(block);
+                encryptedBlocks.Add(encryptedBlock);
+            }
+
+            return encryptedBlocks.SelectMany(x => x).ToArray();
+        }
+
+        public byte[] Verify(byte[] data)
+        {
+            int maxBlockSize = (BitLength(n) + 7) / 8;
+            List<byte[]> decryptedBlocks = new List<byte[]>();
+
+            for (int i = 0; i < data.Length; i += maxBlockSize)
+            {
+                int blockSize = Math.Min(maxBlockSize, data.Length - i);
+                byte[] block = new byte[blockSize];
+                Array.Copy(data, i, block, 0, blockSize);
+                byte[] decryptedBlock = RSAEP(block);
+                decryptedBlocks.Add(decryptedBlock);
+            }
+
+            return decryptedBlocks.SelectMany(x => x).ToArray();
+        }
+        private byte[] RSAEP(byte[] data)
+        {
+            BigInteger m = new BigInteger(data.Reverse().ToArray());
+            BigInteger c = BigInteger.ModPow(m, e, n);
+            byte[] result = c.ToByteArray();
+            Array.Reverse(result);
+            return result;
+        }
+
+        private byte[] RSADP(byte[] data)
+        {
+            BigInteger c = new BigInteger(data.Reverse().ToArray());
+            BigInteger m = BigInteger.ModPow(c, d, n);
+            byte[] result = m.ToByteArray();
+            Array.Reverse(result);
+            return result;
+        }
+
+        private int BitLength(BigInteger value)
+        {
+            return (int)Math.Ceiling(BigInteger.Log(value + 1, 2));
         }
 
         private BigInteger ChoosePublicExponent(BigInteger phi)
@@ -69,8 +144,7 @@ namespace EncryptionLibrary.EncryptionCode.Asymmetric
             BigInteger m0 = m;
             BigInteger y = 0, x = 1;
 
-            if (m == 1)
-                return 0;
+
 
             while (a > 1)
             {
@@ -91,87 +165,73 @@ namespace EncryptionLibrary.EncryptionCode.Asymmetric
             return x;
         }
         ///////////////////////////////////////////////////////////////////////////
-        private byte[] BigIntegerToBytes(BigInteger bigInteger)
+        public void SetPublicKey(BigInteger modulus, BigInteger exponent)
         {
-            byte[] bytes = bigInteger.ToByteArray();
+            n = modulus;
+            e = exponent;
+        }
 
-            // BigInteger.ToByteArray() returns the two's complement representation
-            // Remove leading zero byte if present
-            if (bytes[0] == 0)
+        // Setter for private key (n, d)
+        public void SetPrivateKey(BigInteger modulus, BigInteger exponent)
+        {
+            n = modulus;
+            d = exponent;
+        }
+
+        // Method to convert PEM formatted string to BigInteger for n and e
+        private void PemToPublicKey(string publicKeyPem)
+        {
+            string[] lines = publicKeyPem.Split('\n');
+            foreach (string line in lines)
             {
-                byte[] trimmedBytes = new byte[bytes.Length - 1];
-                Array.Copy(bytes, 1, trimmedBytes, 0, trimmedBytes.Length);
-                bytes = trimmedBytes;
+                if (line.StartsWith("n:"))
+                {
+                    n = BigInteger.Parse(line.Substring(2));
+                }
+                else if (line.StartsWith("e:"))
+                {
+                    e = BigInteger.Parse(line.Substring(2));
+                }
             }
-
-            return bytes;
         }
 
-        // Method to convert byte array to ASCII string
-        private string BytesToAscii(byte[] bytes)
+        // Method to convert PEM formatted string to BigInteger for n and d
+        private void PemToPrivateKey(string privateKeyPem)
         {
-            return Encoding.ASCII.GetString(bytes);
-        }
-
-        // Method to convert byte array to PEM format
-        private string BytesToPem(byte[] bytes, string type)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine($"-----BEGIN {type}-----");
-
-            int lineLength = 64; // Maximum line length in PEM format
-
-            for (int i = 0; i < bytes.Length; i += lineLength)
+            string[] lines = privateKeyPem.Split('\n');
+            foreach (string line in lines)
             {
-                int length = Math.Min(lineLength, bytes.Length - i);
-                builder.AppendLine(Convert.ToBase64String(bytes, i, length));
+                if (line.StartsWith("n:"))
+                {
+                    n = BigInteger.Parse(line.Substring(2));
+                }
+                else if (line.StartsWith("d:"))
+                {
+                    d = BigInteger.Parse(line.Substring(2));
+                }
             }
-
-            builder.AppendLine($"-----END {type}-----");
-
-            return builder.ToString();
         }
 
-        // Method to get ASCII representation of n
-        public string GetNAscii()
+        // Method to generate PEM representation of the public key (n, e)
+        public string GetPublicKeyPem()
         {
-            byte[] nBytes = BigIntegerToBytes(n);
-            return BytesToAscii(nBytes);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("-----BEGIN PUBLIC KEY-----");
+            sb.AppendLine($"n:{n}");
+            sb.AppendLine($"e:{e}");
+            sb.AppendLine("-----END PUBLIC KEY-----");
+            return sb.ToString();
         }
 
-        // Method to get ASCII representation of e
-        public string GetEAscii()
+        // Method to generate PEM representation of the private key (n, d)
+        public string GetPrivateKeyPem()
         {
-            byte[] eBytes = BigIntegerToBytes(e);
-            return BytesToAscii(eBytes);
-        }
-
-        // Method to get ASCII representation of d
-        public string GetDAscii()
-        {
-            byte[] dBytes = BigIntegerToBytes(d);
-            return BytesToAscii(dBytes);
-        }
-
-        // Method to get PEM representation of n
-        public string GetNPem()
-        {
-            byte[] nBytes = BigIntegerToBytes(n);
-            return BytesToPem(nBytes, "MODULUS");
-        }
-
-        // Method to get PEM representation of e
-        public string GetEPem()
-        {
-            byte[] eBytes = BigIntegerToBytes(e);
-            return BytesToPem(eBytes, "PUBLIC EXPONENT");
-        }
-
-        // Method to get PEM representation of d
-        public string GetDPem()
-        {
-            byte[] dBytes = BigIntegerToBytes(d);
-            return BytesToPem(dBytes, "PRIVATE EXPONENT");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("-----BEGIN PRIVATE KEY-----");
+            sb.AppendLine($"n:{n}");
+            sb.AppendLine($"d:{d}");
+            sb.AppendLine("-----END PRIVATE KEY-----");
+            return sb.ToString();
         }
     }
 }

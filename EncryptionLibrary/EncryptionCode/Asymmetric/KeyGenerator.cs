@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Numerics;
 
-namespace EncryptionLibrary.EncryptionCode
+namespace EncryptionLibrary.EncryptionCode.Asymmetric
 {
     public class KeyGenerator
     {
+        ulong seed = (ulong)DateTime.Now.Ticks;
+        private MyRandom myRandom;
         private Random random = new Random();
 
         public BigInteger GenerateKey(int keySize)
         {
+            ulong seed = (ulong)DateTime.Now.Ticks;
+            myRandom = new MyRandom(seed);
             BigInteger primeNumber = GeneratePrime(keySize);
             return primeNumber;
         }
@@ -24,7 +28,7 @@ namespace EncryptionLibrary.EncryptionCode
             return prime;
         }
 
-        private bool IsProbablePrime(BigInteger n, int k = 5)
+        private bool IsProbablePrime(BigInteger n, int k = 10)
         {
             if (n <= 1 || n == 4)
                 return false;
@@ -70,7 +74,7 @@ namespace EncryptionLibrary.EncryptionCode
             do
             {
                 random.NextBytes(bytes);
-                bytes[bytes.Length - 1] &= (byte)0x7F; // Ensure positive number
+                bytes[bytes.Length - 1] &= 0x7F; // Ensure positive number
                 result = new BigInteger(bytes);
             } while (result < min || result >= max);
 
@@ -78,11 +82,22 @@ namespace EncryptionLibrary.EncryptionCode
         }
         private BigInteger GenerateRandomBigInteger(int bits)
         {
-            // Generate a random BigInteger of specified bit length
+            // Generate a random byte array of the required size
             byte[] bytes = new byte[bits / 8];
+            bytes = myRandom.NextBytes(bits / 8);
             random.NextBytes(bytes);
-            bytes[bytes.Length - 1] &= 0x7F; // Ensure positive number
+
+            // Ensure positive number
+            bytes[bytes.Length - 1] &= 0x7F;
+
+            // Convert the byte array to a BigInteger
             return new BigInteger(bytes);
+
+
+
+/*            // Generate a random BigInteger of specified bit length
+            bytes[bytes.Length - 1] &= 0x7F; // Ensure positive number
+            return new BigInteger(bytes);*/
         }
 
     }

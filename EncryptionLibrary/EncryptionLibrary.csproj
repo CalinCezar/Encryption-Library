@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="EncryptionCode\DigitalSignature\" />
-    <Folder Include="EncryptionCode\Symmetric\" />
   </ItemGroup>
 
 </Project>
